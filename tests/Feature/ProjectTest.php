@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -37,7 +38,27 @@ class ProjectTest extends TestCase
             'key' => 'C Major',
             'time_signature' => '4/4',
             'bpm' => 120,
-            'is_collaborative' => false
+            'is_collaborative' => false,
         ]);
+    }
+
+    public function test_project_info_can_be_updated(): void
+    {
+        // Given
+        $project = Project::factory()->create();
+
+        $newProjectData = [
+            'title' => 'Test Project',
+            'key' => 'C Minor',
+            'time_signature' => '3/4',
+            'bpm' => 180,
+        ];
+
+        // When
+        $response = $this->actingAs($this->user)->put('/projects/' . $project->id, $newProjectData);
+
+        // Then
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseHas('projects', $newProjectData);
     }
 }
