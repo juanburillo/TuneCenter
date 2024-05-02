@@ -17,4 +17,8 @@ class ProjectController extends Controller
     {
         return $project->update($request->validated());
     }
+
+    public function destroy(Project $project) {
+        return $project->delete();
+    }
 }

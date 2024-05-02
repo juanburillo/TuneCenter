@@ -61,4 +61,17 @@ class ProjectTest extends TestCase
         $response->assertSessionHasNoErrors();
         $this->assertDatabaseHas('projects', $newProjectData);
     }
+
+    public function test_projects_can_be_deleted(): void
+    {
+        // Given
+        $project = Project::factory()->create();
+
+        // When
+        $response = $this->actingAs($this->user)->delete('/projects/' . $project->id);
+
+        // Then
+        $response->assertSessionHasNoErrors();
+        $this->assertDatabaseMissing('projects', $project->toArray());
+    }
 }
