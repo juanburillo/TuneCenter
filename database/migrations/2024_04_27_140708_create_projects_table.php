@@ -20,6 +20,11 @@ return new class extends Migration
             $table->boolean('is_collaborative')->default(false);
             $table->timestamps();
         });
+
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('project_id')->constrained()->cascadeOnDelete();
+        });
     }
 
     /**
