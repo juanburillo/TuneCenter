@@ -30,6 +30,18 @@ class ProjectTest extends TestCase
         $response->assertStatus(200);
     }
 
+    public function test_specific_project_screen_can_be_rendered(): void
+    {
+        // Given
+        $project = Project::factory()->create();
+
+        // When
+        $response = $this->actingAs($this->user)->get('/projects/' . $project->id);
+
+        // Then
+        $response->assertStatus(200);
+    }
+
     public function test_projects_can_be_created(): void
     {
         // Given

@@ -18,6 +18,11 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Index');
     }
 
+    public function show()
+    {
+        return Inertia::render('Projects/Show');
+    }
+
     public function update(UpdateProjectRequest $request, Project $project)
     {
         return $project->update($request->validated());
