@@ -21,6 +21,15 @@ class ProjectTest extends TestCase
         $this->user = User::factory()->create();
     }
 
+    public function test_projects_screen_can_be_rendered(): void
+    {
+        // When
+        $response = $this->actingAs($this->user)->get('/projects');
+
+        // Then
+        $response->assertStatus(200);
+    }
+
     public function test_projects_can_be_created(): void
     {
         // Given
