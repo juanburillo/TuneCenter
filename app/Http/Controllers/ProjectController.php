@@ -6,29 +6,32 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function store(StoreProjectRequest $request)
+    public function store(StoreProjectRequest $request): Project
     {
         return Project::create($request->validated());
     }
 
-    public function index() {
+    public function index(): Response
+    {
         return Inertia::render('Projects/Index');
     }
 
-    public function show()
+    public function show(): Response
     {
         return Inertia::render('Projects/Show');
     }
 
-    public function update(UpdateProjectRequest $request, Project $project)
+    public function update(UpdateProjectRequest $request, Project $project): bool
     {
         return $project->update($request->validated());
     }
 
-    public function destroy(Project $project) {
+    public function destroy(Project $project): bool
+    {
         return $project->delete();
     }
 }
