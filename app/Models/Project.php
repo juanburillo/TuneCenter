@@ -15,6 +15,7 @@ class Project extends Model
         'key',
         'time_signature',
         'bpm',
+        'owner_id',
     ];
 
     public function users(): BelongsToMany
