@@ -8,11 +8,11 @@ use Inertia\Inertia;
 
 Route::get('/', function() {
     return Inertia::render('Home');
-});
+})->name('home');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/about', function() {
+    return Inertia::render('Home');
+})->name('about');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
