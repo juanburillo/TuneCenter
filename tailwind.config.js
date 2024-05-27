@@ -15,6 +15,11 @@ export default {
             fontFamily: {
                 sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                background: '#f2f7f5',
+                primary: '#2cb67d',
+                text: '#171717',
+            }
         },
     },
 
