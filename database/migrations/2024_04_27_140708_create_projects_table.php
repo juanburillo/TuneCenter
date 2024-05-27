@@ -18,7 +18,13 @@ return new class extends Migration
             $table->string('time_signature')->default('4/4');
             $table->integer('bpm')->default(120);
             $table->boolean('is_collaborative')->default(false);
+            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->timestamps();
+        });
+
+        Schema::create('project_user', function (Blueprint $table) {
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('project_id')->constrained()->cascadeOnDelete();
         });
     }
 

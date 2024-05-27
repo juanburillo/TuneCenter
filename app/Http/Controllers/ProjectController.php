@@ -12,7 +12,11 @@ class ProjectController extends Controller
 {
     public function store(StoreProjectRequest $request): Project
     {
-        return Project::create($request->validated());
+        $validatedData = $request->validated();
+
+        $validatedData['owner_id'] = auth()->id();
+
+        return Project::create($validatedData);
     }
 
     public function index(): Response
