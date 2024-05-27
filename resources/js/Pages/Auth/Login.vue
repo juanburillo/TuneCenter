@@ -17,7 +17,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    input_type: '',
     password: '',
     remember: false,
 });
@@ -25,6 +25,12 @@ const form = useForm({
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
+        data: {
+            input_type: form.input_type,
+            password: form.password,
+            remember: form.remember,
+            [form.input_type]: (form.input_type === 'email') ? form.email : form.username,
+        },
     });
 };
 </script>
@@ -39,19 +45,19 @@ const submit = () => {
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="input_type" value="Email or username" />
 
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="input_type"
+                    type="text"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.input_type"
                     required
                     autofocus
-                    autocomplete="username"
+                    autocomplete="email"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="(form.errors.email) ? form.errors.email : form.errors.username" />
             </div>
 
             <div class="mt-4">
