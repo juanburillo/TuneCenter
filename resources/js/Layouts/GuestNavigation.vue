@@ -2,6 +2,7 @@
 
 import { Link } from '@inertiajs/vue3';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import NavLink from '@/Components/NavLink.vue';
 
 </script>
 
@@ -13,33 +14,33 @@ import ApplicationLogo from '@/Components/ApplicationLogo.vue';
                 <div class="flex">
                     <!-- Logo -->
                     <div class="shrink-0 flex items-center">
-                        <Link href="/">
+                        <Link :href="route('home')">
                             <ApplicationLogo class="h-9 w-auto" />
                         </Link>
                     </div>
 
                     <!-- Navigation Links -->
                     <div class="flex items-center space-x-8 ms-10">
-                        <Link href="/">
+                        <NavLink :href="route('home')" :active="route().current('home')">
                             Home
-                        </Link>
-                        <Link href="/about">
+                        </NavLink>
+                        <NavLink :href="route('about')" :active="route().current('about')">
                             About
-                        </Link>
+                        </NavLink>
                     </div>
                 </div>
 
                 <!-- User Links -->
                 <div class="flex items-center space-x-8">
-                    <Link href="/projects">
+                    <NavLink :href="route('projects.index')">
                         Projects
-                    </Link>
-                    <Link href="/login">
+                    </NavLink>
+                    <NavLink :href="route('login')" :active="route().current('login')">
                         Login
-                    </Link>
-                    <Link href="/register">
+                    </NavLink>
+                    <NavLink :href="route('register')" :active="route().current('register')">
                         Register
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
         </div>

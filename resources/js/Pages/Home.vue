@@ -30,10 +30,10 @@ import GuestNavigation from '@/Layouts/GuestNavigation.vue';
             </p>
             <!-- Buttons -->
             <div class="mt-10 flex items-center justify-center gap-x-6">
-                <Link href="/projects" tabindex="-1">
+                <Link :href="route('projects.index')" tabindex="-1">
                     <PrimaryButton>Get started</PrimaryButton>
                 </Link>
-                <Link href="/about" tabindex="-1">
+                <Link :href="route('about')" tabindex="-1">
                     <SecondaryButton>Learn more<span aria-hidden="true" class="ml-1">&rarr;</span></SecondaryButton>
                 </Link>
             </div>
