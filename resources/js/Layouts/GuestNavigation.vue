@@ -20,7 +20,7 @@ import NavLink from '@/Components/NavLink.vue';
                     </div>
 
                     <!-- Navigation Links -->
-                    <div class="flex items-center space-x-8 ms-10">
+                    <div class="flex space-x-8 ms-10">
                         <NavLink :href="route('home')" :active="route().current('home')">
                             Home
                         </NavLink>
@@ -31,7 +31,7 @@ import NavLink from '@/Components/NavLink.vue';
                 </div>
 
                 <!-- User Links -->
-                <div class="flex items-center space-x-8">
+                <div class="flex space-x-8">
                     <NavLink :href="route('projects.index')">
                         Projects
                     </NavLink>
