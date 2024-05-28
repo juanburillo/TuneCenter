@@ -13,8 +13,12 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                background: '#f2f7f5',
+                primary: '#2cb67d',
+            }
         },
     },
 

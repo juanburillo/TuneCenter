@@ -17,7 +17,7 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
+    input_type: '',
     password: '',
     remember: false,
 });
@@ -25,6 +25,12 @@ const form = useForm({
 const submit = () => {
     form.post(route('login'), {
         onFinish: () => form.reset('password'),
+        data: {
+            input_type: form.input_type,
+            password: form.password,
+            remember: form.remember,
+            [form.input_type]: (form.input_type === 'email') ? form.email : form.username,
+        },
     });
 };
 </script>
@@ -33,25 +39,25 @@ const submit = () => {
     <GuestLayout>
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="mb-4 font-medium text-sm text-primary">
             {{ status }}
         </div>
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="input_type" value="Email or username" />
 
                 <TextInput
-                    id="email"
-                    type="email"
+                    id="input_type"
+                    type="text"
                     class="mt-1 block w-full"
-                    v-model="form.email"
+                    v-model="form.input_type"
                     required
                     autofocus
-                    autocomplete="username"
+                    autocomplete="email"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="(form.errors.email) ? form.errors.email : form.errors.username" />
             </div>
 
             <div class="mt-4">
@@ -80,7 +86,7 @@ const submit = () => {
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
                 >
                     Forgot your password?
                 </Link>
