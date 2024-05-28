@@ -32,13 +32,13 @@ import NavLink from '@/Components/NavLink.vue';
 
                 <!-- User Links -->
                 <div class="flex space-x-8">
-                    <NavLink :href="route('projects.index')">
+                    <NavLink :href="route('projects.index')" v-if="$page.props.auth.user">
                         Projects
                     </NavLink>
-                    <NavLink :href="route('login')" :active="route().current('login')">
+                    <NavLink :href="route('login')" :active="route().current('login')" v-if="!$page.props.auth.user">
                         Login
                     </NavLink>
-                    <NavLink :href="route('register')" :active="route().current('register')">
+                    <NavLink :href="route('register')" :active="route().current('register')" v-if="!$page.props.auth.user">
                         Register
                     </NavLink>
                 </div>
