@@ -7,6 +7,7 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import DangerButton from '@/Components/DangerButton.vue';
 import Modal from '@/Components/Modal.vue';
+import StatusBar from '@/Components/StatusBar.vue';
 
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -66,6 +67,10 @@ const closeModal = () => {
 <template>
 
     <Head title="Projects" />
+
+    <StatusBar v-if="$page.props.flash.success">
+        {{ $page.props.flash.success }}
+    </StatusBar>
 
     <AuthenticatedLayout>
         <template #header>
