@@ -1,5 +1,4 @@
 <script setup>
-
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
@@ -62,7 +61,6 @@ const closeModal = () => {
     confirmingProjectDeletion.value = false;
     projectToDelete.value = null;
 }
-
 </script>
 
 <template>
@@ -84,7 +82,7 @@ const closeModal = () => {
                                 <InputLabel for="title" value="Title" />
 
                                 <TextInput id="title" type="text" class="mt-1 block w-full" v-model="createForm.title"
-                                    required autofocus />
+                                    autofocus />
 
                                 <InputError class="mt-2" :message="createForm.errors.title" />
                             </div>
