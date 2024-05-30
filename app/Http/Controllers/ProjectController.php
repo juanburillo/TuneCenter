@@ -10,18 +10,20 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function store(StoreProjectRequest $request): Project
+    public function store(StoreProjectRequest $request): void
     {
         $validatedData = $request->validated();
 
         $validatedData['owner_id'] = auth()->id();
 
-        return Project::create($validatedData);
+        auth()->user()->projects()->create($validatedData);
     }
 
     public function index(): Response
     {
-        return Inertia::render('Projects/Index');
+        return Inertia::render('Projects/Index', [
+            'projects' => auth()->user()->projects()->latest('updated_at')->get(),
+        ]);
     }
 
     public function show(): Response
@@ -34,8 +36,8 @@ class ProjectController extends Controller
         return $project->update($request->validated());
     }
 
-    public function destroy(Project $project): bool
+    public function destroy(Project $project): void
     {
-        return $project->delete();
+        $project->delete();
     }
 }
