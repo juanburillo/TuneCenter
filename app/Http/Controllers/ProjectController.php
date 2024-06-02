@@ -39,8 +39,10 @@ class ProjectController extends Controller
         return $project->update($request->validated());
     }
 
-    public function destroy(Project $project): void
+    public function destroy(Project $project): RedirectResponse
     {
         $project->delete();
+
+        return redirect()->route('projects.index')->with('success', 'Project was deleted successfully!');
     }
 }
