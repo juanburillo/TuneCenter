@@ -5,23 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function store(StoreProjectRequest $request): Project
+    public function store(StoreProjectRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
         $validatedData['owner_id'] = auth()->id();
 
-        return Project::create($validatedData);
+        auth()->user()->projects()->create($validatedData);
+
+        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
     }
 
     public function index(): Response
     {
-        return Inertia::render('Projects/Index');
+        return Inertia::render('Projects/Index', [
+            'projects' => auth()->user()->projects()->latest('updated_at')->get(),
+        ]);
     }
 
     public function show(): Response
@@ -34,8 +39,10 @@ class ProjectController extends Controller
         return $project->update($request->validated());
     }
 
-    public function destroy(Project $project): bool
+    public function destroy(Project $project): RedirectResponse
     {
-        return $project->delete();
+        $project->delete();
+
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
     }
 }
