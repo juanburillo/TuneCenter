@@ -23,8 +23,7 @@ const createForm = useForm({
     username: '',
 });
 
-const deleteForm = useForm({});
-const updateForm = useForm({});
+const actionForm = useForm({});
 
 const submitCreateForm = () => {
     createForm.post(route('connections.store'), {
@@ -89,8 +88,8 @@ const submitCreateForm = () => {
                         <h1 class="font-bold text-xl">Incoming connection requests</h1>
                         <div class="mt-4 flex items-center space-x-4" v-for="request in incomingRequests">
                             <p>{{ request.username }}</p>
-                            <PrimaryButton @click="updateForm.put(route('connections.update', request.id))">Accept</PrimaryButton>
-                            <DangerButton @click="deleteForm.delete(route('connections.destroy', request.id))">Decline</DangerButton>
+                            <PrimaryButton @click="actionForm.put(route('connections.update', request.id))">Accept</PrimaryButton>
+                            <DangerButton @click="actionForm.delete(route('connections.destroy', request.id))">Decline</DangerButton>
                         </div>
                     </div>
                 </div>
