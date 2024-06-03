@@ -6,6 +6,7 @@ use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -29,18 +30,23 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function show(): Response
+    public function show(Project $project): Response
     {
-        return Inertia::render('Projects/Show');
+        Gate::authorize('view', $project);
+        return Inertia::render('Projects/Show', [
+            'project' => auth()->user()->projects()->find($project),
+        ]);
     }
 
     public function update(UpdateProjectRequest $request, Project $project): bool
     {
+        Gate::authorize('update', $project);
         return $project->update($request->validated());
     }
 
     public function destroy(Project $project): RedirectResponse
     {
+        Gate::authorize('delete', $project);
         $project->delete();
 
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
