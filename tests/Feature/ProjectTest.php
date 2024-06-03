@@ -80,7 +80,7 @@ class ProjectTest extends TestCase
         $response = $this->actingAs($this->user)->put('/projects/' . $project->id, $newProjectData);
 
         // Then
-        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200);
         $this->assertDatabaseHas('projects', $newProjectData);
     }
 
@@ -93,7 +93,7 @@ class ProjectTest extends TestCase
         $response = $this->actingAs($this->user)->delete('/projects/' . $project->id);
 
         // Then
-        $response->assertSessionHasNoErrors();
+        $response->assertStatus(200);
         $this->assertDatabaseMissing('projects', $project->toArray());
     }
 
