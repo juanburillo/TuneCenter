@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
@@ -24,6 +25,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::post('/connections', [ConnectionController::class, 'store'])->name('connections.store');
+    Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');
 });
 
 require __DIR__.'/auth.php';

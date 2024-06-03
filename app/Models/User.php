@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -56,5 +57,41 @@ class User extends Authenticatable
     public function ownedProjects(): HasMany
     {
         return $this->hasMany(Project::class, 'owner_id');
+    }
+
+    // Connection relationships
+    public function connections(): Collection
+    {
+        return $this->acceptedSentConnections->merge($this->acceptedReceivedConnections);
+    }
+
+    public function allSentConnections(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'connections', 'sender_id', 'recipient_id')->withTimestamps();
+    }
+
+    public function allReceivedConnections(): BelongsToMany
+    {
+        return $this->belongsToMany(self::class, 'connections', 'recipient_id', 'sender_id')->withTimestamps();
+    }
+
+    public function pendingSentConnections(): BelongsToMany
+    {
+        return $this->allSentConnections()->wherePivot('accepted', false);
+    }
+
+    public function pendingReceivedConnections(): BelongsToMany
+    {
+        return $this->allReceivedConnections()->wherePivot('accepted', false);
+    }
+
+    public function acceptedSentConnections(): BelongsToMany
+    {
+        return $this->allSentConnections()->wherePivot('accepted', true);
+    }
+
+    public function acceptedReceivedConnections(): BelongsToMany
+    {
+        return $this->allReceivedConnections()->wherePivot('accepted', true);
     }
 }
