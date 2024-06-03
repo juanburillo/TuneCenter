@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/connections', [ConnectionController::class, 'store'])->name('connections.store');
     Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');
+    Route::put('/connections/{user}', [ConnectionController::class, 'update'])->name('connections.update');
     Route::delete('/connections/{user}', [ConnectionController::class, 'destroy'])->name('connections.destroy');
 });
 

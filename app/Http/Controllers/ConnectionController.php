@@ -46,6 +46,13 @@ class ConnectionController extends Controller
         ]);
     }
 
+    public function update(User $user): RedirectResponse
+    {
+        auth()->user()->pendingReceivedConnections()->updateExistingPivot($user, ['accepted' => true]);
+
+        return redirect()->route('connections.index')->with('success', 'Connection request accepted!');
+    }
+
     public function destroy(User $user): RedirectResponse
     {
         if (auth()->user()->pendingReceivedConnections()->detach($user)) {
