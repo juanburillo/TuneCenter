@@ -49,4 +49,25 @@ class ConnectionTest extends TestCase
             'accepted' => false,
         ]);
     }
+
+    public function test_connection_can_be_deleted(): void
+    {
+        // Given
+        $recipientUserData = [
+            'username' => $this->recipientUser->username,
+        ];
+
+        $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
+
+        // When
+        $response = $this->actingAs($this->recipientUser)->delete('/connections/' . $this->senderUser->id);
+
+        // Then
+        $response->assertRedirect(route('connections.index'));
+        $this->assertDatabaseMissing('connections', [
+            'sender_id' => $this->senderUser->id,
+            'recipient_id' => $this->recipientUser->id,
+            'accepted' => false,
+        ]);
+    }
 }

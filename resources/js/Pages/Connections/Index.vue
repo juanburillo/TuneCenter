@@ -31,8 +31,8 @@ const submitCreateForm = () => {
     });
 };
 
-const handleConnectionDelete = () => {
-    deleteForm.delete(route('connections.destroy'));
+const handleConnectionDelete = (userId) => {
+    deleteForm.delete(route('connections.destroy', userId));
 }
 </script>
 
@@ -82,9 +82,7 @@ const handleConnectionDelete = () => {
                         </div>
                         <div class="mt-4 flex items-center space-x-4" v-else v-for="connection in connections">
                             <p>{{ connection.username }}</p>
-                            <form>
-                                <DangerButton @click="handleConnectionDelete">Remove</DangerButton>
-                            </form>
+                            <DangerButton @click="handleConnectionDelete(connection.id)">Remove</DangerButton>
                         </div>
                     </div>
                 </div>

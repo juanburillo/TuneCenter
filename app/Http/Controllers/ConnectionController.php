@@ -45,4 +45,18 @@ class ConnectionController extends Controller
             'incomingRequests' => auth()->user()->pendingReceivedConnections,
         ]);
     }
+
+    public function destroy(User $user): RedirectResponse
+    {
+        if (auth()->user()->pendingReceivedConnections()->detach($user)) {
+            // Connection request has been declined
+            $message = 'Connection request declined!';
+        } else {
+            // Connection has been removed
+            auth()->user()->acceptedReceivedConnections()->detach($user) || auth()->user()->acceptedSentConnections()->detach($user);
+            $message = 'Connection removed!';
+        }
+
+        return redirect()->route('connections.index')->with('success', $message);
+    }
 }
