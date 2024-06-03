@@ -53,7 +53,7 @@ class ProjectTest extends TestCase
         $response = $this->actingAs($this->user)->post('/projects', $projectData);
 
         // Then
-        $response->assertStatus(200);
+        $response->assertRedirect(route('projects.index'));
         $this->assertDatabaseHas('projects', [
             'title' => 'Test Project',
             'key' => 'C Major',
