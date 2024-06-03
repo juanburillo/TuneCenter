@@ -25,19 +25,13 @@ class ConnectionController extends Controller
         if ($recipient->is(auth()->user())) return redirect()->back()->withErrors(['username' => 'You cannot add yourself.']);
 
         // Check if the users are already connected to each other
-        if (auth()->user()->connections()->find($recipient)) {
-            return redirect()->back()->withErrors(['username' => 'You are already connected to this user.']);
-        }
+        if (auth()->user()->connections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You are already connected to this user.']);
 
         // Check if the connection request has already been sent
-        if (auth()->user()->pendingSentConnections()->find($recipient)) {
-            return redirect()->back()->withErrors(['username' => 'You have already sent a connection request to this user.']);
-        }
+        if (auth()->user()->pendingSentConnections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You have already sent a connection request to this user.']);
 
         // Check if there's already a pending connection request from the recipient
-        if (auth()->user()->pendingReceivedConnections()->find($recipient)) {
-            return redirect()->back()->withErrors(['username' => 'You have already received a connection request from this user.']);
-        }
+        if (auth()->user()->pendingReceivedConnections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You have already received a connection request from this user.']);
 
         auth()->user()->pendingSentConnections()->attach($recipient);
 
