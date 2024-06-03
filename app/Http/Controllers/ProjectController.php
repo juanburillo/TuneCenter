@@ -19,9 +19,9 @@ class ProjectController extends Controller
 
         $validatedData['owner_id'] = auth()->id();
 
-        auth()->user()->projects()->create($validatedData);
+        $project = auth()->user()->projects()->create($validatedData);
 
-        return redirect()->route('projects.index')->with('success', 'Project created successfully!');
+        return redirect()->route('projects.showDashboard', $project->id);
     }
 
     public function index(): Response
@@ -29,14 +29,6 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Index', [
             'projects' => auth()->user()->projects()->latest('updated_at')->get(),
             'invitations' => auth()->user()->projectInvitations()->orderBy('title')->get(),
-        ]);
-    }
-
-    public function show(Project $project): Response
-    {
-        Gate::authorize('view', $project);
-        return Inertia::render('Projects/Show', [
-            'project' => auth()->user()->projects()->find($project),
         ]);
     }
 
@@ -64,5 +56,37 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('projects.index')->with('success', $message);
+    }
+
+    public function showDashboard(Project $project): Response
+    {
+        Gate::authorize('view', $project);
+        return Inertia::render('Projects/Dashboard', [
+            'project' => auth()->user()->projects()->find($project),
+        ]);
+    }
+
+    public function showLyrics(Project $project): Response
+    {
+        Gate::authorize('view', $project);
+        return Inertia::render('Projects/Lyrics', [
+            'project' => auth()->user()->projects()->find($project),
+        ]);
+    }
+
+    public function showAudio(Project $project): Response
+    {
+        Gate::authorize('view', $project);
+        return Inertia::render('Projects/Audio', [
+            'project' => auth()->user()->projects()->find($project),
+        ]);
+    }
+
+    public function showMessages(Project $project): Response
+    {
+        Gate::authorize('view', $project);
+        return Inertia::render('Projects/Messages', [
+            'project' => auth()->user()->projects()->find($project),
+        ]);
     }
 }

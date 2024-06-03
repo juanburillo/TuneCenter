@@ -23,9 +23,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/projects', [ProjectController::class, 'store'])->name('projects.store');
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
-    Route::get('/projects/{project}', [ProjectController::class, 'show'])->name('projects.show');
     Route::put('/projects/{project}', [ProjectController::class, 'update'])->name('projects.update');
     Route::delete('/projects/{project}', [ProjectController::class, 'destroy'])->name('projects.destroy');
+
+    Route::get('/projects/{project}', [ProjectController::class, 'showDashboard'])->name('projects.showDashboard');
+    Route::get('/projects/{project}/lyrics', [ProjectController::class, 'showLyrics'])->name('projects.showLyrics');
+    Route::get('/projects/{project}/audio', [ProjectController::class, 'showAudio'])->name('projects.showAudio');
+    Route::get('/projects/{project}/messages', [ProjectController::class, 'showMessages'])->name('projects.showMessages');
 
     Route::post('/connections', [ConnectionController::class, 'store'])->name('connections.store');
     Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');

@@ -22,7 +22,7 @@ const projectToDelete = ref(null);
 
 defineProps({
     projects: {
-        type: Array,
+        type: Object,
         required: true,
     },
     invitations: {
@@ -136,7 +136,7 @@ const closeModal = () => {
                                     </small>
                                 </div>
                             </div>
-                            <Link :href="route('projects.show', project)" tabindex="-1">
+                            <Link :href="route('projects.showDashboard', project)" tabindex="-1">
                             <SecondaryButton class="mt-4">Open</SecondaryButton>
                             </Link>
                         </div>
