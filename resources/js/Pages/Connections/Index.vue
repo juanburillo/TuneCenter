@@ -24,16 +24,13 @@ const createForm = useForm({
 });
 
 const deleteForm = useForm({});
+const updateForm = useForm({});
 
 const submitCreateForm = () => {
     createForm.post(route('connections.store'), {
         onSuccess: () => createForm.reset('username'),
     });
 };
-
-const handleConnectionDelete = (userId) => {
-    deleteForm.delete(route('connections.destroy', userId));
-}
 </script>
 
 <template>
@@ -82,7 +79,18 @@ const handleConnectionDelete = (userId) => {
                         </div>
                         <div class="mt-4 flex items-center space-x-4" v-else v-for="connection in connections">
                             <p>{{ connection.username }}</p>
-                            <DangerButton @click="handleConnectionDelete(connection.id)">Remove</DangerButton>
+                            <DangerButton @click="deleteForm.delete(route('connections.destroy', connection.id))">Remove</DangerButton>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 bg-white shadow-sm rounded-lg" v-if="incomingRequests.length !== 0">
+                    <div class="p-6">
+                        <h1 class="font-bold text-xl">Incoming connection requests</h1>
+                        <div class="mt-4 flex items-center space-x-4" v-for="request in incomingRequests">
+                            <p>{{ request.username }}</p>
+                            <PrimaryButton @click="updateForm.put(route('connections.update', request.id))">Accept</PrimaryButton>
+                            <DangerButton @click="deleteForm.delete(route('connections.destroy', request.id))">Decline</DangerButton>
                         </div>
                     </div>
                 </div>
