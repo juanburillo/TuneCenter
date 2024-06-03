@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpdateProjectRequest;
 use App\Models\Project;
 use App\Http\Requests\StoreProjectRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
@@ -46,9 +47,21 @@ class ProjectController extends Controller
 
     public function destroy(Project $project): RedirectResponse
     {
-        Gate::authorize('delete', $project);
-        $project->delete();
+        try {
+            Gate::authorize('delete', $project);
+            $project->delete();
 
-        return redirect()->route('projects.index')->with('success', 'Project deleted successfully!');
+            $message = 'Project deleted successfully!';
+        } catch (AuthorizationException  $exception) {
+            $project->users()->detach(auth()->user());
+
+            if ($project->users()->count() === 1) {
+                $project->update(['is_collaborative' => false]);
+            }
+
+            $message = 'You left the project!';
+        }
+
+        return redirect()->route('projects.index')->with('success', $message);
     }
 }
