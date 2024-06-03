@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UpdateProjectRequest;
+use App\Http\Requests\ProjectStoreRequest;
+use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
-use App\Http\Requests\StoreProjectRequest;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Gate;
@@ -13,7 +13,7 @@ use Inertia\Response;
 
 class ProjectController extends Controller
 {
-    public function store(StoreProjectRequest $request): RedirectResponse
+    public function store(ProjectStoreRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -39,7 +39,7 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(UpdateProjectRequest $request, Project $project): bool
+    public function update(ProjectUpdateRequest $request, Project $project): bool
     {
         Gate::authorize('update', $project);
         return $project->update($request->validated());
@@ -52,7 +52,7 @@ class ProjectController extends Controller
             $project->delete();
 
             $message = 'Project deleted successfully!';
-        } catch (AuthorizationException  $exception) {
+        } catch (AuthorizationException $exception) {
             $project->users()->detach(auth()->user());
 
             if ($project->users()->count() === 1) {
