@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConnectionController;
+use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
@@ -30,6 +31,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/connections', [ConnectionController::class, 'index'])->name('connections.index');
     Route::put('/connections/{user}', [ConnectionController::class, 'update'])->name('connections.update');
     Route::delete('/connections/{user}', [ConnectionController::class, 'destroy'])->name('connections.destroy');
+
+    Route::put('/invitations/{project}', [InvitationController::class, 'update'])->name('invitations.update');
+    Route::delete('/invitations/{project}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
 });
 
 require __DIR__.'/auth.php';

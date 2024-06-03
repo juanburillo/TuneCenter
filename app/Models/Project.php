@@ -16,6 +16,7 @@ class Project extends Model
         'key',
         'time_signature',
         'bpm',
+        'is_collaborative',
         'owner_id',
     ];
 
@@ -27,5 +28,10 @@ class Project extends Model
     public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class, 'owner_id');
+    }
+
+    public function invitedUsers(): BelongsToMany
+    {
+        return $this->belongsToMany(User::class, 'invitations');
     }
 }

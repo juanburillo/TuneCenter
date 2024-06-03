@@ -28,6 +28,7 @@ class ProjectController extends Controller
     {
         return Inertia::render('Projects/Index', [
             'projects' => auth()->user()->projects()->latest('updated_at')->get(),
+            'invitations' => auth()->user()->projectInvitations()->orderBy('title')->get(),
         ]);
     }
 
