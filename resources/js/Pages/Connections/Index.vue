@@ -78,7 +78,7 @@ const submitCreateForm = () => {
                         </div>
                         <div class="mt-4 flex items-center space-x-4" v-else v-for="connection in connections">
                             <p>{{ connection.username }}</p>
-                            <DangerButton @click="deleteForm.delete(route('connections.destroy', connection.id))">Remove</DangerButton>
+                            <DangerButton @click="actionForm.delete(route('connections.destroy', connection.id))">Remove</DangerButton>
                         </div>
                     </div>
                 </div>
