@@ -50,6 +50,27 @@ class ConnectionTest extends TestCase
         ]);
     }
 
+    public function test_connection_request_can_be_declined(): void
+    {
+        // Given
+        $recipientUserData = [
+            'username' => $this->recipientUser->username,
+        ];
+
+        $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
+
+        // When
+        $response = $this->actingAs($this->recipientUser)->put('/connections/' . $this->senderUser->id);
+
+        // Then
+        $response->assertRedirect(route('connections.index'));
+        $this->assertDatabaseHas('connections', [
+            'sender_id' => $this->senderUser->id,
+            'recipient_id' => $this->recipientUser->id,
+            'accepted' => true,
+        ]);
+    }
+
     public function test_connection_can_be_deleted(): void
     {
         // Given
