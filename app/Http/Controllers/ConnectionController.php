@@ -40,6 +40,9 @@ class ConnectionController extends Controller
 
     public function index(): Response
     {
-        return Inertia::render('Connections/Index');
+        return Inertia::render('Connections/Index', [
+            'connections' => auth()->user()->connections()->sortBy('username'),
+            'incomingRequests' => auth()->user()->pendingReceivedConnections,
+        ]);
     }
 }
