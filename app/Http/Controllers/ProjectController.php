@@ -7,6 +7,7 @@ use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -32,10 +33,12 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(ProjectUpdateRequest $request, Project $project): bool
+    public function update(ProjectUpdateRequest $request, Project $project): RedirectResponse
     {
         Gate::authorize('update', $project);
-        return $project->update($request->validated());
+        $project->update($request->validated());
+
+        return redirect()->route('projects.show.dashboard', $project->id);
     }
 
     public function destroy(Project $project): RedirectResponse
