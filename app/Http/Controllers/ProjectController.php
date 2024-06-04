@@ -67,6 +67,7 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Dashboard', [
             'project' => auth()->user()->projects()->find($project),
             'connections' => auth()->user()->connections(),
+            'collaborators' => $project->users,
         ]);
     }
 

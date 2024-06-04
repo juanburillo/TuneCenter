@@ -6,6 +6,8 @@ import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectInput from '@/Components/SelectInput.vue';
+import StatusBar from '@/Components/StatusBar.vue';
+import DangerButton from '@/Components/DangerButton.vue';
 
 defineProps({
     project: {
@@ -15,7 +17,11 @@ defineProps({
     connections: {
         type: Array,
         required: true,
-    }
+    },
+    collaborators: {
+        type: Array,
+        required: true,
+    },
 });
 
 const project = usePage().props.project;
@@ -31,6 +37,8 @@ const invitationForm = useForm({
     username: '',
 });
 
+const actionForm = useForm({});
+
 const submitProjectInfoForm = () => {
     projectInfoForm.put(route('projects.update', project.id), {
         onSuccess: () => {
@@ -38,6 +46,7 @@ const submitProjectInfoForm = () => {
             project.key = projectInfoForm.key;
             project.time_signature = projectInfoForm.time_signature;
             project.bpm = projectInfoForm.bpm;
+            console.log(project);
         },
     });
 };
@@ -50,6 +59,10 @@ const submitInvitationForm = () => {
 <template>
 
     <Head title="Dashboard" />
+
+    <StatusBar v-if="$page.props.flash.success">
+        {{ $page.props.flash.success }}
+    </StatusBar>
 
     <ProjectLayout :project="project">
 
@@ -123,6 +136,18 @@ const submitInvitationForm = () => {
                                 </PrimaryButton>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8" v-if="project.is_collaborative">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        <h1 class="mb-4 font-bold text-xl">Project collaborators</h1>
+                        <div v-for="collaborator in collaborators" class="mt-4 flex items-start flex-col">
+                            <p>{{ collaborator.name }}</p>
+                            <p class="italic text-sm">{{ collaborator.username }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
