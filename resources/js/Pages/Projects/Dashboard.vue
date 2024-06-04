@@ -1,14 +1,19 @@
 <script setup>
-import { Head, useForm, usePage } from '@inertiajs/vue3';
+import { Head, useForm, usePage, Link } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import SelectInput from '@/Components/SelectInput.vue';
 
 defineProps({
     project: {
         type: Object,
+        required: true,
+    },
+    connections: {
+        type: Array,
         required: true,
     }
 });
@@ -22,6 +27,10 @@ const projectInfoForm = useForm({
     bpm: String(project.bpm),
 });
 
+const invitationForm = useForm({
+    username: '',
+});
+
 const submitProjectInfoForm = () => {
     projectInfoForm.put(route('projects.update', project.id), {
         onSuccess: () => {
@@ -31,6 +40,10 @@ const submitProjectInfoForm = () => {
             project.bpm = projectInfoForm.bpm;
         },
     });
+};
+
+const submitInvitationForm = () => {
+    invitationForm.post(route('invitations.store', project.id));
 };
 </script>
 
@@ -71,7 +84,9 @@ const submitProjectInfoForm = () => {
                                 <InputError class="mt-2" :message="projectInfoForm.errors.bpm" />
                             </div>
                             <div class="mt-4 flex items-center gap-4">
-                                <PrimaryButton :disabled="projectInfoForm.processing">Update</PrimaryButton>
+                                <PrimaryButton :class="{ 'opacity-25': projectInfoForm.processing }" :disabled="projectInfoForm.processing">
+                                    Update
+                                </PrimaryButton>
 
                                 <Transition
                                     enter-active-class="transition ease-in-out"
@@ -81,6 +96,31 @@ const submitProjectInfoForm = () => {
                                 >
                                     <p v-if="projectInfoForm.recentlySuccessful" class="text-sm text-gray-600">Updated.</p>
                                 </Transition>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                    <div class="p-6">
+                        <h1 class="font-bold text-xl">Invite one of your connections</h1>
+                        <p class="mt-4" v-if="connections.length === 0">You don't have any connections yet. <Link :href="route('connections.index')" class="underline text-primary">Add someone</Link> and get creative!</p>
+                        <form v-else @submit.prevent="submitInvitationForm" class="mt-4">
+                            <div>
+                                <InputLabel for="username" value="Your connections" />
+                                <SelectInput v-model="invitationForm.username" id="username" class="block mt-1 w-full">
+                                    <option v-for="connection in connections">
+                                        {{ connection.username }}
+                                    </option>
+                                </SelectInput>
+                                <InputError class="mt-2" :message="invitationForm.errors.username" />
+                            </div>
+                            <div class="mt-4">
+                                <PrimaryButton :class="{ 'opacity-25': invitationForm.processing }" :disabled="invitationForm.processing">
+                                    Invite
+                                </PrimaryButton>
                             </div>
                         </form>
                     </div>

@@ -32,6 +32,6 @@ class Project extends Model
 
     public function invitedUsers(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'invitations');
+        return $this->belongsToMany(User::class, 'invitations')->withTimestamps();
     }
 }

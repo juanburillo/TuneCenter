@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/connections/{user}', [ConnectionController::class, 'update'])->name('connections.update');
     Route::delete('/connections/{user}', [ConnectionController::class, 'destroy'])->name('connections.destroy');
 
+    Route::post('/invitations/{project}', [InvitationController::class, 'store'])->name('invitations.store');
     Route::put('/invitations/{project}', [InvitationController::class, 'update'])->name('invitations.update');
     Route::delete('/invitations/{project}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
 });

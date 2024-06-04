@@ -61,7 +61,7 @@ class User extends Authenticatable
 
     public function projectInvitations(): BelongsToMany
     {
-        return $this->belongsToMany(Project::class, 'invitations');
+        return $this->belongsToMany(Project::class, 'invitations')->withTimestamps();
     }
 
     // Connection relationships

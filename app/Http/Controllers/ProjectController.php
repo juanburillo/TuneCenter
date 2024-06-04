@@ -66,6 +66,7 @@ class ProjectController extends Controller
         Gate::authorize('view', $project);
         return Inertia::render('Projects/Dashboard', [
             'project' => auth()->user()->projects()->find($project),
+            'connections' => auth()->user()->connections(),
         ]);
     }
 
