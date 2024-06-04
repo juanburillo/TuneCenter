@@ -36,16 +36,16 @@ defineProps({
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('projects.showDashboard', project.id)" :active="route().current('projects.showDashboard')">
+                                <NavLink :href="route('projects.show.dashboard', project.id)" :active="route().current('projects.show.dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink :href="route('projects.showLyrics', project.id)" :active="route().current('projects.showLyrics')">
+                                <NavLink :href="route('projects.show.lyrics', project.id)" :active="route().current('projects.show.lyrics')">
                                     Lyrics
                                 </NavLink>
-                                <NavLink :href="route('projects.showAudio', project.id)" :active="route().current('projects.showAudio')">
+                                <NavLink :href="route('projects.show.audio', project.id)" :active="route().current('projects.show.audio')">
                                     Audio
                                 </NavLink>
-                                <NavLink :href="route('projects.showMessages', project.id)" :active="route().current('projects.showMessages')">
+                                <NavLink :href="route('projects.show.messages', project.id)" :active="route().current('projects.show.messages')">
                                     Messages
                                 </NavLink>
                             </div>
@@ -128,16 +128,16 @@ defineProps({
                     class="sm:hidden"
                 >
                     <div class="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink :href="route('projects.showDashboard', project.id)" :active="route().current('projects.showDashboard')">
+                        <ResponsiveNavLink :href="route('projects.show.dashboard', project.id)" :active="route().current('projects.show.dashboard')">
                             Dashboard
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('projects.showLyrics', project.id)" :active="route().current('projects.showLyrics')">
+                        <ResponsiveNavLink :href="route('projects.show.lyrics', project.id)" :active="route().current('projects.show.lyrics')">
                             Lyrics
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('projects.showAudio', project.id)" :active="route().current('projects.showAudio')">
+                        <ResponsiveNavLink :href="route('projects.show.audio', project.id)" :active="route().current('projects.show.audio')">
                             Audio
                         </ResponsiveNavLink>
-                        <ResponsiveNavLink :href="route('projects.showMessages', project.id)" :active="route().current('projects.showMessages')">
+                        <ResponsiveNavLink :href="route('projects.show.messages', project.id)" :active="route().current('projects.show.messages')">
                             Messages
                         </ResponsiveNavLink>
                     </div>

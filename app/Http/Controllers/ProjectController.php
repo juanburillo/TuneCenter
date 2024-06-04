@@ -21,7 +21,7 @@ class ProjectController extends Controller
 
         $project = auth()->user()->projects()->create($validatedData);
 
-        return redirect()->route('projects.showDashboard', $project->id);
+        return redirect()->route('projects.show.dashboard', $project->id);
     }
 
     public function index(): Response

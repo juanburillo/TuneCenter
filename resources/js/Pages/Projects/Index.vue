@@ -38,9 +38,7 @@ const createForm = useForm({
 const actionForm = useForm({});
 
 const submitCreateForm = () => {
-    createForm.post(route('projects.store'), {
-        onSuccess: () => createForm.reset('title'),
-    });
+    createForm.post(route('projects.store'));
 };
 
 const handleProjectDelete = () => {
@@ -136,7 +134,7 @@ const closeModal = () => {
                                     </small>
                                 </div>
                             </div>
-                            <Link :href="route('projects.showDashboard', project)" tabindex="-1">
+                            <Link :href="route('projects.show.dashboard', project)" tabindex="-1">
                             <SecondaryButton class="mt-4">Open</SecondaryButton>
                             </Link>
                         </div>
