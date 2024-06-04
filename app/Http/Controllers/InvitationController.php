@@ -34,7 +34,7 @@ class InvitationController extends Controller
 
         $project->invitedUsers()->attach($recipient);
 
-        return redirect()->route('projects.show.dashboard', $project->id);
+        return redirect()->route('projects.show.dashboard', $project->id)->with('success', 'Invitation sent successfully!');
     }
 
     public function update(Project $project): RedirectResponse
