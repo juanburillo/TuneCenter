@@ -97,9 +97,8 @@ const handleShowUpdateModal = (lyric) => {
             <div @click="showCreateModal = true"
                 class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto hover:opacity-80 transition ease-in-out duration-150">
                 <div class="py-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-10 mb-2 inline-block text-gray-500">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 mb-2 inline-block text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                     </svg>
 
                     <h4 class="text-base font-medium text-gray-500">Create new lyric version</h4>
@@ -125,18 +124,13 @@ const handleShowUpdateModal = (lyric) => {
                 <form @submit.prevent="submitCreateForm" class="mt-4">
                     <div>
                         <InputLabel for="title" value="Title" />
-
-                        <TextInput id="title" type="text" class="mt-1 block w-full" v-model="createForm.title"
-                            autofocus />
-
+                        <TextInput id="title" type="text" class="mt-1 block w-full" v-model="createForm.title" autofocus />
                         <InputError class="mt-2" :message="createForm.errors.title" />
                     </div>
 
                     <div class="mt-4">
                         <InputLabel for="content" value="Content" />
-
                         <TextAreaInput id="content" class="mt-1 block w-full h-72" v-model="createForm.content" />
-
                         <InputError class="mt-2" :message="createForm.errors.content" />
                     </div>
 
@@ -155,17 +149,13 @@ const handleShowUpdateModal = (lyric) => {
                 <form @submit.prevent="submitUpdateForm">
                     <div>
                         <InputLabel for="title" value="Title" />
-
                         <TextInput id="title" type="text" class="mt-1 block w-full" v-model="updateForm.title" />
-
                         <InputError class="mt-2" :message="updateForm.errors.title" />
                     </div>
 
                     <div class="mt-4">
                         <InputLabel for="content" value="Content" />
-
                         <TextAreaInput id="content" class="mt-1 block w-full h-72" v-model="updateForm.content" />
-
                         <InputError class="mt-2" :message="updateForm.errors.content" />
                     </div>
 
