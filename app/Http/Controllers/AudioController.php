@@ -27,6 +27,10 @@ class AudioController extends Controller
     }
 
     public function destroy(Audio $audio) {
+        // Delete the associated file
+        Storage::disk('public')->delete($audio->file);
+
+        // Delete the database record
         $audio->delete();
 
         return redirect()->back()->with('success', 'Audio item deleted successfully!');
