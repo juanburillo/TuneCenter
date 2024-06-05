@@ -19,23 +19,23 @@ class ConnectionController extends Controller
         $recipient = User::where('username', $validatedData['username'])->first();
 
         // Check if the recipient user exists
-        if (!$recipient) return redirect()->back()->withErrors(['username' => 'This user does not exist.']);
+        if (!$recipient) return back()->withErrors(['username' => 'This user does not exist.']);
 
         // Check if the recipient is the authenticated user
-        if ($recipient->is(auth()->user())) return redirect()->back()->withErrors(['username' => 'You cannot add yourself.']);
+        if ($recipient->is(auth()->user())) return back()->withErrors(['username' => 'You cannot add yourself.']);
 
         // Check if the users are already connected to each other
-        if (auth()->user()->connections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You are already connected to this user.']);
+        if (auth()->user()->connections()->find($recipient)) return back()->withErrors(['username' => 'You are already connected to this user.']);
 
         // Check if the connection request has already been sent
-        if (auth()->user()->pendingSentConnections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You have already sent a connection request to this user.']);
+        if (auth()->user()->pendingSentConnections()->find($recipient)) return back()->withErrors(['username' => 'You have already sent a connection request to this user.']);
 
         // Check if there's already a pending connection request from the recipient
-        if (auth()->user()->pendingReceivedConnections()->find($recipient)) return redirect()->back()->withErrors(['username' => 'You have already received a connection request from this user.']);
+        if (auth()->user()->pendingReceivedConnections()->find($recipient)) return back()->withErrors(['username' => 'You have already received a connection request from this user.']);
 
         auth()->user()->pendingSentConnections()->attach($recipient);
 
-        return redirect()->route('connections.index')->with('success', 'Connection request successfully sent!');
+        return back()->with('success', 'Connection request successfully sent!');
     }
 
     public function index(): Response
@@ -50,7 +50,7 @@ class ConnectionController extends Controller
     {
         auth()->user()->pendingReceivedConnections()->updateExistingPivot($user, ['accepted' => true]);
 
-        return redirect()->route('connections.index')->with('success', 'Connection request accepted!');
+        return back()->with('success', 'Connection request accepted!');
     }
 
     public function destroy(User $user): RedirectResponse
@@ -64,6 +64,6 @@ class ConnectionController extends Controller
             $message = 'Connection removed!';
         }
 
-        return redirect()->route('connections.index')->with('success', $message);
+        return back()->with('success', $message);
     }
 }

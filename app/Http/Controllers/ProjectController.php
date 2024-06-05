@@ -33,12 +33,10 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function update(ProjectUpdateRequest $request, Project $project): RedirectResponse
+    public function update(ProjectUpdateRequest $request, Project $project): void
     {
         Gate::authorize('update', $project);
         $project->update($request->validated());
-
-        return redirect()->route('projects.show.dashboard', $project->id);
     }
 
     public function destroy(Project $project): RedirectResponse
@@ -58,7 +56,7 @@ class ProjectController extends Controller
             $message = 'You left the project!';
         }
 
-        return redirect()->route('projects.index')->with('success', $message);
+        return back()->with('success', $message);
     }
 
     public function showDashboard(Project $project): Response

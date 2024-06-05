@@ -23,7 +23,7 @@ class AudioController extends Controller
             'project_id' => $request->project_id,
         ]);
 
-        return redirect()->back()->with('success', 'Audio item created successfully!');
+        return back()->with('success', 'Audio item created successfully!');
     }
 
     public function destroy(Audio $audio) {
@@ -33,6 +33,6 @@ class AudioController extends Controller
         // Delete the database record
         $audio->delete();
 
-        return redirect()->back()->with('success', 'Audio item deleted successfully!');
+        return back()->with('success', 'Audio item deleted successfully!');
     }
 }

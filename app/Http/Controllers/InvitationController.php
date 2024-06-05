@@ -19,22 +19,22 @@ class InvitationController extends Controller
         $recipient = User::where('username', $validatedData['username'])->first();
 
          // Check if the recipient user exists
-        if (! $recipient) return redirect()->back()->withErrors(['username' => 'This user does not exist.']);
+        if (! $recipient) return back()->withErrors(['username' => 'This user does not exist.']);
 
         // Check if the recipient user is a connection
         if (! auth()->user()->connections()->find($recipient)) {
-            return redirect()->back()->withErrors(['username' => 'You can only invite your connections.']);
+            return back()->withErrors(['username' => 'You can only invite your connections.']);
         }
 
         // Check if the recipient user is already in the project
-        if ($project->users()->find($recipient)) return redirect()->back()->withErrors(['username' => 'This user is already in the project.']);
+        if ($project->users()->find($recipient)) return back()->withErrors(['username' => 'This user is already in the project.']);
 
         // Check if the recipient user has already been invited to the project.
-        if ($project->invitedUsers()->find($recipient)) return redirect()->back()->withErrors(['username' => 'This user has already been invited to this project.']);
+        if ($project->invitedUsers()->find($recipient)) return back()->withErrors(['username' => 'This user has already been invited to this project.']);
 
         $project->invitedUsers()->attach($recipient);
 
-        return redirect()->route('projects.show.dashboard', $project->id)->with('success', 'Invitation sent successfully!');
+        return back()->with('success', 'Invitation sent successfully!');
     }
 
     public function update(Project $project): RedirectResponse
@@ -45,13 +45,13 @@ class InvitationController extends Controller
 
         if (! $project->is_collaborative) $project->update(['is_collaborative' => true]);
 
-        return redirect()->route('projects.index')->with('success', 'You joined the project!');
+        return back()->with('success', 'You joined the project!');
     }
 
     public function destroy(Project $project): RedirectResponse
     {
         $project->invitedUsers()->detach(auth()->user());
 
-        return redirect()->route('projects.index')->with('success', 'Project invitation declined!');
+        return back()->with('success', 'Project invitation declined!');
     }
 }

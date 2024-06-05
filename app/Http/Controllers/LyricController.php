@@ -13,20 +13,20 @@ class LyricController extends Controller
     {
         auth()->user()->lyrics()->create($request->validated());
 
-        return redirect()->back()->with('success', 'Lyric created successfully!');
+        return back()->with('success', 'Lyric created successfully!');
     }
 
     public function update(LyricUpdateRequest $request, Lyric $lyric): RedirectResponse
     {
         $lyric->update($request->validated());
 
-        return redirect()->back()->with('success', 'Lyric updated successfully!');
+        return back()->with('success', 'Lyric updated successfully!');
     }
 
     public function destroy(Lyric $lyric): RedirectResponse
     {
         $lyric->delete();
 
-        return redirect()->back()->with('success', 'Lyric deleted successfully!');
+        return back()->with('success', 'Lyric deleted successfully!');
     }
 }
