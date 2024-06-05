@@ -119,7 +119,7 @@ const getSvgColor = (type) => {
                         Your browser does not support the audio element.
                     </audio>
                     <div class="mt-2 flex items-center justify-center gap-x-2">
-                        <svg class="h-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <svg class="h-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="50" cy="50" r="50" :fill="getSvgColor(audio.type)" />
                         </svg>
                         <p>{{ displayAudioType(audio.type) }}</p>
