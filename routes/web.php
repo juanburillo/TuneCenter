@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AudioController;
 use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LyricController;
@@ -44,6 +45,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/lyrics', [LyricController::class, 'store'])->name('lyrics.store');
     Route::put('/lyrics/{lyric}', [LyricController::class, 'update'])->name('lyrics.update');
     Route::delete('/lyrics/{lyric}', [LyricController::class, 'destroy'])->name('lyrics.destroy');
+
+    Route::post('/audio', [AudioController::class, 'store'])->name('audio.store');
 });
 
 require __DIR__.'/auth.php';

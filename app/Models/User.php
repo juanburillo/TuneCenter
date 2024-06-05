@@ -69,6 +69,11 @@ class User extends Authenticatable
         return $this->hasMany(Lyric::class);
     }
 
+    public function audio(): HasMany
+    {
+        return $this->hasMany(Audio::class);
+    }
+
     // Connection relationships
     public function connections(): Collection
     {
