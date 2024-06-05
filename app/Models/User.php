@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Project::class, 'invitations')->withTimestamps();
     }
 
+    public function lyrics(): HasMany
+    {
+        return $this->hasMany(Lyric::class);
+    }
+
     // Connection relationships
     public function connections(): Collection
     {
