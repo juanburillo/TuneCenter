@@ -7,7 +7,6 @@ use App\Http\Requests\ProjectUpdateRequest;
 use App\Models\Project;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -62,6 +61,7 @@ class ProjectController extends Controller
     public function showDashboard(Project $project): Response
     {
         Gate::authorize('view', $project);
+
         return Inertia::render('Projects/Dashboard', [
             'project' => auth()->user()->projects()->find($project),
             'connections' => auth()->user()->connections(),
@@ -72,6 +72,7 @@ class ProjectController extends Controller
     public function showLyrics(Project $project): Response
     {
         Gate::authorize('view', $project);
+
         return Inertia::render('Projects/Lyrics', [
             'project' => auth()->user()->projects()->find($project),
             'lyrics' => $project->lyrics()->latest()->get(),
@@ -81,6 +82,7 @@ class ProjectController extends Controller
     public function showAudio(Project $project): Response
     {
         Gate::authorize('view', $project);
+
         return Inertia::render('Projects/Audio', [
             'project' => auth()->user()->projects()->find($project),
             'audios' => $project->audio()->orderBy('type')->orderByDesc('created_at')->get(),
@@ -90,6 +92,7 @@ class ProjectController extends Controller
     public function showMessages(Project $project): Response
     {
         Gate::authorize('view', $project);
+
         return Inertia::render('Projects/Messages', [
             'project' => auth()->user()->projects()->find($project),
             'messages' => $project->messages,

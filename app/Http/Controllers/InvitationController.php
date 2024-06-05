@@ -6,7 +6,6 @@ use App\Http\Requests\InvitationStoreRequest;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
@@ -16,8 +15,10 @@ class InvitationController extends Controller
 
         $recipient = User::where('username', $request['username'])->first();
 
-         // Check if the recipient user exists
-        if (! $recipient) return back()->withErrors(['username' => 'This user does not exist.']);
+        // Check if the recipient user exists
+        if (! $recipient) {
+            return back()->withErrors(['username' => 'This user does not exist.']);
+        }
 
         // Check if the recipient user is a connection
         if (! auth()->user()->connections()->find($recipient)) {
@@ -25,10 +26,14 @@ class InvitationController extends Controller
         }
 
         // Check if the recipient user is already in the project
-        if ($project->users()->find($recipient)) return back()->withErrors(['username' => 'This user is already in the project.']);
+        if ($project->users()->find($recipient)) {
+            return back()->withErrors(['username' => 'This user is already in the project.']);
+        }
 
         // Check if the recipient user has already been invited to the project.
-        if ($project->invitedUsers()->find($recipient)) return back()->withErrors(['username' => 'This user has already been invited to this project.']);
+        if ($project->invitedUsers()->find($recipient)) {
+            return back()->withErrors(['username' => 'This user has already been invited to this project.']);
+        }
 
         $project->invitedUsers()->attach($recipient);
 
@@ -41,7 +46,9 @@ class InvitationController extends Controller
 
         $project->invitedUsers()->detach(auth()->user());
 
-        if (! $project->is_collaborative) $project->update(['is_collaborative' => true]);
+        if (! $project->is_collaborative) {
+            $project->update(['is_collaborative' => true]);
+        }
 
         return back()->with('success', 'You joined the project!');
     }

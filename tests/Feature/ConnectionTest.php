@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ConnectionTest extends TestCase
@@ -12,6 +11,7 @@ class ConnectionTest extends TestCase
     use RefreshDatabase;
 
     private $senderUser;
+
     private $recipientUser;
 
     public function setUp(): void
@@ -60,7 +60,7 @@ class ConnectionTest extends TestCase
         $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
 
         // When
-        $response = $this->actingAs($this->recipientUser)->put('/connections/' . $this->senderUser->id);
+        $response = $this->actingAs($this->recipientUser)->put('/connections/'.$this->senderUser->id);
 
         // Then
         $response->assertRedirect(route('connections.index'));
@@ -81,7 +81,7 @@ class ConnectionTest extends TestCase
         $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
 
         // When
-        $response = $this->actingAs($this->recipientUser)->delete('/connections/' . $this->senderUser->id);
+        $response = $this->actingAs($this->recipientUser)->delete('/connections/'.$this->senderUser->id);
 
         // Then
         $response->assertRedirect(route('connections.index'));

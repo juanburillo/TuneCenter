@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MessageStoreRequest;
-use Illuminate\Http\RedirectResponse;
 
 class MessageController extends Controller
 {

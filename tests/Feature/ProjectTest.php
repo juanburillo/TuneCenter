@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProjectTest extends TestCase
@@ -36,7 +35,7 @@ class ProjectTest extends TestCase
         $project = Project::factory()->create(['owner_id' => $this->user->id]);
 
         // When
-        $response = $this->actingAs($this->user)->get('/projects/' . $project->id);
+        $response = $this->actingAs($this->user)->get('/projects/'.$project->id);
 
         // Then
         $response->assertStatus(200);
@@ -77,7 +76,7 @@ class ProjectTest extends TestCase
         ];
 
         // When
-        $response = $this->actingAs($this->user)->put('/projects/' . $project->id, $newProjectData);
+        $response = $this->actingAs($this->user)->put('/projects/'.$project->id, $newProjectData);
 
         // Then
         $response->assertStatus(200);
@@ -90,7 +89,7 @@ class ProjectTest extends TestCase
         $project = Project::factory()->create(['owner_id' => $this->user->id]);
 
         // When
-        $response = $this->actingAs($this->user)->delete('/projects/' . $project->id);
+        $response = $this->actingAs($this->user)->delete('/projects/'.$project->id);
 
         // Then
         $response->assertStatus(200);

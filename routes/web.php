@@ -7,15 +7,14 @@ use App\Http\Controllers\LyricController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function() {
+Route::get('/', function () {
     return Inertia::render('Home');
 })->name('home');
 
-Route::get('/about', function() {
+Route::get('/about', function () {
     return Inertia::render('About');
 })->name('about');
 

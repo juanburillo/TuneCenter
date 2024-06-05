@@ -25,7 +25,7 @@ class ProjectFactory extends Factory
                 'F Major', 'F# Major',
                 'G Major', 'G# Major',
                 'A Major', 'A# Major',
-                'B Major'
+                'B Major',
             ]),
             'time_signature' => fake()->randomElement([
                 '4/4',
