@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InvitationStoreRequest;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -9,14 +10,11 @@ use Illuminate\Http\Request;
 
 class InvitationController extends Controller
 {
-    public function store(Request $request, Project $project): RedirectResponse
+    public function store(InvitationStoreRequest $request, Project $project): RedirectResponse
     {
+        $request->validated();
 
-        $validatedData = $request->validate([
-            'username' => 'required|string',
-        ]);
-
-        $recipient = User::where('username', $validatedData['username'])->first();
+        $recipient = User::where('username', $request['username'])->first();
 
          // Check if the recipient user exists
         if (! $recipient) return back()->withErrors(['username' => 'This user does not exist.']);

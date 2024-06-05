@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ConnectionStoreRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -10,13 +11,11 @@ use Inertia\Response;
 
 class ConnectionController extends Controller
 {
-    public function store(Request $request): RedirectResponse
+    public function store(ConnectionStoreRequest $request): RedirectResponse
     {
-        $validatedData = $request->validate([
-            'username' => 'required|string|min:2|max:255',
-        ]);
+        $request->validated();
 
-        $recipient = User::where('username', $validatedData['username'])->first();
+        $recipient = User::where('username', $request['username'])->first();
 
         // Check if the recipient user exists
         if (!$recipient) return back()->withErrors(['username' => 'This user does not exist.']);
