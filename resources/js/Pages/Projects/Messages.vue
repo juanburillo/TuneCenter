@@ -9,10 +9,19 @@ defineProps({
     project: {
         type: Object,
         required: true,
+    },
+    messages: {
+        type: Array,
+        required: true,
+    },
+    collaborators: {
+        type: Array,
+        required: true,
     }
 });
 
 const project = usePage().props.project;
+const collaborators = usePage().props.collaborators;
 
 const createForm = useForm({
     content: '',
@@ -21,9 +30,16 @@ const createForm = useForm({
 
 const submitCreateForm = () => {
     createForm.post(route('messages.store'), {
-        onSuccess: () => createForm.reset(),
+        onSuccess: () => {
+            createForm.reset();
+        }
     });
 };
+
+const getMessageUsername = (message) => {
+    const collaborator = collaborators.find(c => c.id === message.user_id);
+    return collaborator ? collaborator.username : 'Unknown';
+}
 </script>
 
 <template>
@@ -42,8 +58,12 @@ const submitCreateForm = () => {
                     <div class="p-6">
                         <h1 class="font-bold text-xl">Messages</h1>
 
-                        <div class="mt-4 h-72 border border-gray-300 rounded">
-
+                        <div class="mt-4 h-72 border border-gray-300 rounded overflow-y-auto">
+                            <p v-for="message in messages" :key="message.id" class="p-2">
+                                <span v-if="message.user_id === $page.props.auth.user.id" class="font-bold text-primary">You:</span>
+                                <span v-else class="font-bold">{{ getMessageUsername(message) }}:</span>
+                                {{ message.content }}
+                            </p>
                         </div>
 
                         <form @submit.prevent="submitCreateForm" class="mt-4 flex gap-x-4">

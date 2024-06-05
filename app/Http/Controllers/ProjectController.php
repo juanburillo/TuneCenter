@@ -95,6 +95,7 @@ class ProjectController extends Controller
         return Inertia::render('Projects/Messages', [
             'project' => auth()->user()->projects()->find($project),
             'messages' => $project->messages,
+            'collaborators' => $project->users,
         ]);
     }
 }
