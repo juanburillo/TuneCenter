@@ -9,8 +9,12 @@ import TextInput from '@/Components/TextInput.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import InputError from '@/Components/InputError.vue';
 import TextAreaInput from '@/Components/TextAreaInput.vue';
+import DangerButton from '@/Components/DangerButton.vue';
+import StatusBar from '@/Components/StatusBar.vue';
 
-const showModal = ref(false);
+const showCreateModal = ref(false);
+const showUpdateModal = ref(false);
+const selectedLyric = ref(null);
 
 defineProps({
     project: {
@@ -31,23 +35,57 @@ const createForm = useForm({
     project_id: projectId,
 });
 
+const updateForm = useForm({
+    title: '',
+    content: '',
+});
+
+const deleteForm = useForm({});
+
 const submitCreateForm = () => {
     createForm.post(route('lyrics.store'), {
         onSuccess: () => {
-            closeModal();
+            closeCreateModal();
             createForm.reset('title', 'content');
         },
     });
 };
 
-const closeModal = () => {
-    showModal.value = false;
+const submitUpdateForm = () => {
+    updateForm.put(route('lyrics.update', selectedLyric.value.id), {
+        onSuccess: () => closeUpdateModal(),
+    });
+};
+
+const submitDeleteForm = () => {
+    deleteForm.delete(route('lyrics.destroy', selectedLyric.value.id), {
+        onSuccess: () => closeUpdateModal(),
+    });
+}
+
+const closeCreateModal = () => {
+    showCreateModal.value = false;
+}
+
+const closeUpdateModal = () => {
+    showUpdateModal.value = false;
+}
+
+const handleShowUpdateModal = (lyric) => {
+    selectedLyric.value = lyric;
+    updateForm.title = lyric.title;
+    updateForm.content = lyric.content;
+    showUpdateModal.value = true;
 }
 </script>
 
 <template>
 
     <Head title="Lyrics" />
+
+    <StatusBar v-if="$page.props.flash.success">
+        {{ $page.props.flash.success }}
+    </StatusBar>
 
     <ProjectLayout :project="project">
 
@@ -56,9 +94,11 @@ const closeModal = () => {
         </template>
 
         <div class="py-12 px-4 grid gap-y-6 gap-x-4 md:grid-cols-2 lg:grid-cols-3">
-            <div @click="showModal = true" class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto">
+            <div @click="showCreateModal = true"
+                class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto hover:opacity-80 transition ease-in-out duration-150">
                 <div class="py-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 mb-2 inline-block text-gray-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-10 mb-2 inline-block text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                     </svg>
 
@@ -66,7 +106,8 @@ const closeModal = () => {
                 </div>
             </div>
 
-            <div v-for="lyric in lyrics" class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 mx-auto">
+            <div v-for="lyric in lyrics" :key="lyric.id" @click="handleShowUpdateModal(lyric)"
+                class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 mx-auto hover:opacity-80 transition ease-in-out duration-150">
                 <div class="py-6 w-full">
                     <h3 class="text-lg font-medium overflow-hidden text-ellipsis">{{ lyric.title }}</h3>
                     <p class="overflow-hidden text-ellipsis whitespace-nowrap">{{lyric.content }}</p>
@@ -74,8 +115,8 @@ const closeModal = () => {
             </div>
         </div>
 
-
-        <Modal :show="showModal" @close="closeModal">
+        <!-- Create lyric modal -->
+        <Modal :show="showCreateModal" @close="closeCreateModal">
             <div class="p-6">
                 <h2 class="text-lg font-medium text-gray-900">
                     Create a new lyric for this project
@@ -85,7 +126,8 @@ const closeModal = () => {
                     <div>
                         <InputLabel for="title" value="Title" />
 
-                        <TextInput id="title" type="text" class="mt-1 block w-full" v-model="createForm.title" autofocus />
+                        <TextInput id="title" type="text" class="mt-1 block w-full" v-model="createForm.title"
+                            autofocus />
 
                         <InputError class="mt-2" :message="createForm.errors.title" />
                     </div>
@@ -93,19 +135,47 @@ const closeModal = () => {
                     <div class="mt-4">
                         <InputLabel for="content" value="Content" />
 
-                        <TextAreaInput id="content" class="mt-1 block w-full h-72" v-model="createForm.content" autofocus />
+                        <TextAreaInput id="content" class="mt-1 block w-full h-72" v-model="createForm.content" />
 
                         <InputError class="mt-2" :message="createForm.errors.content" />
-                        <InputError class="mt-2" :message="createForm.errors.user_id" />
-                        <InputError class="mt-2" :message="createForm.errors.project_id" />
                     </div>
 
                     <div class="mt-6 flex">
-                        <SecondaryButton @click="closeModal">Cancel</SecondaryButton>
+                        <SecondaryButton @click="closeCreateModal">Cancel</SecondaryButton>
                         <PrimaryButton class="ms-3">Create</PrimaryButton>
                     </div>
                 </form>
 
+            </div>
+        </Modal>
+
+        <!-- Update lyric modal -->
+        <Modal :show="showUpdateModal" @close="closeUpdateModal">
+            <div class="p-6">
+                <form @submit.prevent="submitUpdateForm">
+                    <div>
+                        <InputLabel for="title" value="Title" />
+
+                        <TextInput id="title" type="text" class="mt-1 block w-full" v-model="updateForm.title" />
+
+                        <InputError class="mt-2" :message="updateForm.errors.title" />
+                    </div>
+
+                    <div class="mt-4">
+                        <InputLabel for="content" value="Content" />
+
+                        <TextAreaInput id="content" class="mt-1 block w-full h-72" v-model="updateForm.content" />
+
+                        <InputError class="mt-2" :message="updateForm.errors.content" />
+                    </div>
+
+                    <div class="mt-6 flex">
+                        <SecondaryButton @click="closeUpdateModal">Cancel</SecondaryButton>
+                        <PrimaryButton class="ms-3">Update</PrimaryButton>
+                    </div>
+                </form>
+
+                <DangerButton @click="submitDeleteForm" class="mt-4">Delete</DangerButton>
             </div>
         </Modal>
 

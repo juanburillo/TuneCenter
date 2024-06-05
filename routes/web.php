@@ -42,6 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/invitations/{project}', [InvitationController::class, 'destroy'])->name('invitations.destroy');
 
     Route::post('/lyrics', [LyricController::class, 'store'])->name('lyrics.store');
+    Route::put('/lyrics/{lyric}', [LyricController::class, 'update'])->name('lyrics.update');
+    Route::delete('/lyrics/{lyric}', [LyricController::class, 'destroy'])->name('lyrics.destroy');
 });
 
 require __DIR__.'/auth.php';
