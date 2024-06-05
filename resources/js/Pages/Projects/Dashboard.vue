@@ -46,7 +46,6 @@ const submitProjectInfoForm = () => {
             project.key = projectInfoForm.key;
             project.time_signature = projectInfoForm.time_signature;
             project.bpm = projectInfoForm.bpm;
-            console.log(project);
         },
     });
 };

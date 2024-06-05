@@ -136,7 +136,7 @@ const handleShowUpdateModal = (lyric) => {
 
                     <div class="mt-6 flex">
                         <SecondaryButton @click="closeCreateModal">Cancel</SecondaryButton>
-                        <PrimaryButton class="ms-3">Create</PrimaryButton>
+                        <PrimaryButton :class="{ 'opacity-25': createForm.processing }" :disabled="createForm.processing" class="ms-3">Create</PrimaryButton>
                     </div>
                 </form>
 
@@ -161,7 +161,7 @@ const handleShowUpdateModal = (lyric) => {
 
                     <div class="mt-6 flex">
                         <SecondaryButton @click="closeUpdateModal">Cancel</SecondaryButton>
-                        <PrimaryButton class="ms-3">Update</PrimaryButton>
+                        <PrimaryButton :class="{ 'opacity-25': updateForm.processing }" :disabled="updateForm.processing" class="ms-3">Update</PrimaryButton>
                     </div>
                 </form>
 

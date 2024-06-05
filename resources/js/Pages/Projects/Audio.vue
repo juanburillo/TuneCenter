@@ -37,7 +37,6 @@ const createForm = useForm({
 const deleteForm = useForm({});
 
 const submitCreateForm = () => {
-    console.log(createForm.data());
     createForm.post(route('audio.store'), {
         onSuccess: () => {
             closeCreateModal();
@@ -187,7 +186,7 @@ const getSvgColor = (type) => {
 
                     <div class="mt-6 flex">
                         <SecondaryButton @click="closeCreateModal">Cancel</SecondaryButton>
-                        <PrimaryButton class="ms-3">Create</PrimaryButton>
+                        <PrimaryButton :class="{ 'opacity-25': createForm.processing }" :disabled="createForm.processing" class="ms-3">Create</PrimaryButton>
                     </div>
                 </form>
             </div>
