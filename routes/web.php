@@ -47,6 +47,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/lyrics/{lyric}', [LyricController::class, 'destroy'])->name('lyrics.destroy');
 
     Route::post('/audio', [AudioController::class, 'store'])->name('audio.store');
+    Route::delete('/audio/{audio}', [AudioController::class, 'destroy'])->name('audio.destroy');
 });
 
 require __DIR__.'/auth.php';

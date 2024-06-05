@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AudioStoreRequest;
+use App\Models\Audio;
 use Illuminate\Support\Facades\Storage;
 
 class AudioController extends Controller
@@ -23,5 +24,11 @@ class AudioController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Audio item created successfully!');
+    }
+
+    public function destroy(Audio $audio) {
+        $audio->delete();
+
+        return redirect()->back()->with('success', 'Audio item deleted successfully!');
     }
 }
