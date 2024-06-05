@@ -95,7 +95,7 @@ const getSvgColor = (type) => {
 
         <div class="py-12 px-4 grid gap-y-6 gap-x-4 md:grid-cols-2 lg:grid-cols-3">
             <div @click="showCreateModal = true"
-                class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto hover:opacity-80 transition ease-in-out duration-150">
+                class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto hover:bg-gray-100 hover:border-gray-500 transition ease-in-out duration-150">
                 <div class="py-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-8 mb-2 inline-block text-gray-500">
