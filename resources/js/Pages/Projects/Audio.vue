@@ -145,7 +145,7 @@ const getSvgColor = (type) => {
                             </svg>
                         </div>
 
-                        <SelectInput id="type" type="text" class="mt-1 block w-full" v-model="createForm.type">
+                        <SelectInput id="type" class="mt-1 block w-full" v-model="createForm.type">
                             <option value="track">Track</option>
                             <option value="song">Song</option>
                             <option value="voice_note">Voice note</option>
