@@ -16,6 +16,10 @@ defineProps({
     project: {
         type: Object,
         required: true,
+    },
+    lyrics: {
+        type: Array,
+        required: true,
     }
 });
 
@@ -51,8 +55,8 @@ const closeModal = () => {
             Lyrics
         </template>
 
-        <div class="py-12" @click="showModal = true">
-            <div class="bg-gray-50 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto font-[sans-serif]">
+        <div class="py-12 px-4 grid gap-y-6 gap-x-4 md:grid-cols-2 lg:grid-cols-3">
+            <div @click="showModal = true" class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 border-dashed mx-auto">
                 <div class="py-6">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 mb-2 inline-block text-gray-500">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -61,7 +65,15 @@ const closeModal = () => {
                     <h4 class="text-base font-medium text-gray-500">Create new lyric version</h4>
                 </div>
             </div>
+
+            <div v-for="lyric in lyrics" class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center cursor-pointer border-2 border-gray-400 mx-auto">
+                <div class="py-6 w-full">
+                    <h3 class="text-lg font-medium overflow-hidden text-ellipsis">{{ lyric.title }}</h3>
+                    <p class="overflow-hidden text-ellipsis whitespace-nowrap">{{lyric.content }}</p>
+                </div>
+            </div>
         </div>
+
 
         <Modal :show="showModal" @close="closeModal">
             <div class="p-6">

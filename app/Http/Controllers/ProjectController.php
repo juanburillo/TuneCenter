@@ -76,6 +76,7 @@ class ProjectController extends Controller
         Gate::authorize('view', $project);
         return Inertia::render('Projects/Lyrics', [
             'project' => auth()->user()->projects()->find($project),
+            'lyrics' => $project->lyrics()->latest()->get(),
         ]);
     }
 
