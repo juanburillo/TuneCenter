@@ -24,7 +24,7 @@ class AudioStoreRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'type' => 'required|string|in:track,song,voice_note',
-            'file' => 'required|file|mimes:mp3,flac,m4a,wav|max:20480', // Max 20MB
+            'file' => 'required|file|mimes:mp3,flac,m4a,wav|max:51200', // Max 50MB
             'project_id' => 'required|integer',
         ];
     }

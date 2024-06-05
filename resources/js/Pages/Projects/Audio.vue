@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
 import ProjectLayout from '@/Layouts/ProjectLayout.vue';
 import Modal from '@/Components/Modal.vue';
@@ -17,6 +17,10 @@ const showHelpText = ref(false);
 defineProps({
     project: {
         type: Object,
+        required: true,
+    },
+    audios: {
+        type: Array,
         required: true,
     },
 });
@@ -51,6 +55,26 @@ const toggleHelpText = () => {
 const handleFileUpload = (event) => {
     createForm.file = event.target.files[0];
 };
+
+const displayAudioType = (type) => {
+    if (type === 'track') {
+        return 'Track';
+    } else if (type === 'song') {
+        return 'Song';
+    } else {
+        return 'Voice Note';
+    }
+};
+
+const getSvgColor = (type) => {
+    if (type === 'track') {
+        return '#22c55e';
+    } else if (type === 'song') {
+        return '#3b82f6';
+    } else {
+        return '#ec4899';
+    }
+};
 </script>
 
 <template>
@@ -78,6 +102,22 @@ const handleFileUpload = (event) => {
                     </svg>
 
                     <h4 class="text-base font-medium text-gray-500">Create new audio item</h4>
+                </div>
+            </div>
+
+            <div v-for="audio in audios" :key="audio.id" class="bg-gray-50 w-full h-40 text-center px-4 rounded max-w-md flex flex-col items-center justify-center border-2 border-gray-400 mx-auto">
+                <div class="py-6 w-full">
+                    <h3 class="text-lg font-medium overflow-hidden text-ellipsis">{{ audio.title }}</h3>
+                    <audio controls class="mt-2 m-auto">
+                        <source :src="'/storage/' + audio.file">
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div class="mt-2 flex items-center justify-center gap-x-2">
+                        <svg class="h-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                            <circle cx="50" cy="50" r="50" :fill="getSvgColor(audio.type)" />
+                        </svg>
+                        <p>{{ displayAudioType(audio.type) }}</p>
+                    </div>
                 </div>
             </div>
         </div>

@@ -85,6 +85,7 @@ class ProjectController extends Controller
         Gate::authorize('view', $project);
         return Inertia::render('Projects/Audio', [
             'project' => auth()->user()->projects()->find($project),
+            'audios' => $project->audio()->orderBy('type')->orderByDesc('created_at')->get(),
         ]);
     }
 
