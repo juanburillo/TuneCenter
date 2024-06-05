@@ -4,6 +4,7 @@ use App\Http\Controllers\AudioController;
 use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\LyricController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Foundation\Application;
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/audio', [AudioController::class, 'store'])->name('audio.store');
     Route::delete('/audio/{audio}', [AudioController::class, 'destroy'])->name('audio.destroy');
+
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
 
 require __DIR__.'/auth.php';

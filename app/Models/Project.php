@@ -45,4 +45,9 @@ class Project extends Model
     {
         return $this->hasMany(Audio::class);
     }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
 }

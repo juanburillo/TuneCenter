@@ -74,6 +74,11 @@ class User extends Authenticatable
         return $this->hasMany(Audio::class);
     }
 
+    public function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
     // Connection relationships
     public function connections(): Collection
     {

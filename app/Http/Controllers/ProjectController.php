@@ -94,6 +94,7 @@ class ProjectController extends Controller
         Gate::authorize('view', $project);
         return Inertia::render('Projects/Messages', [
             'project' => auth()->user()->projects()->find($project),
+            'messages' => $project->messages,
         ]);
     }
 }
