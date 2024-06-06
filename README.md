@@ -26,14 +26,17 @@ Follow these steps to set up and run TuneCenter on your local machine:
    This creates a symbolic link from `public/storage` to `storage/app/public` for public accessibility.
 
 6. **Configure environment variables**  
-   Duplicate the `.env.example` file and rename it to `.env`. Adjust the database values and other configurations as necessary.  
-   This file contains all the environment-specific settings.
+   Duplicate the `.env.example` file and rename it to `.env`. The only important configurations that need to be changed are the `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` fields. Adjust these values to match your database setup.
 
-7. **Run database migrations**  
+7. **Generate application key**  
+    Run `php artisan key:generate`.
+    This generates a new application key, which is used by Laravel to encrypt sensitive data.
+
+8. **Run database migrations**  
    Run `php artisan migrate`.  
    This sets up the database tables required by the application.
 
-8. **Start the Laravel development server**  
+9. **Start the Laravel development server**  
    Run `php artisan serve`.  
    This starts the local development server on `http://localhost:8000`.
 
