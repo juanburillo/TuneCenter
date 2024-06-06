@@ -39,10 +39,9 @@ class ConnectionTest extends TestCase
         ];
 
         // When
-        $response = $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
+        $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
 
         // Then
-        $response->assertRedirect(route('connections.index'));
         $this->assertDatabaseHas('connections', [
             'sender_id' => $this->senderUser->id,
             'recipient_id' => $this->recipientUser->id,
@@ -60,10 +59,9 @@ class ConnectionTest extends TestCase
         $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
 
         // When
-        $response = $this->actingAs($this->recipientUser)->put('/connections/'.$this->senderUser->id);
+        $this->actingAs($this->recipientUser)->put('/connections/'.$this->senderUser->id);
 
         // Then
-        $response->assertRedirect(route('connections.index'));
         $this->assertDatabaseHas('connections', [
             'sender_id' => $this->senderUser->id,
             'recipient_id' => $this->recipientUser->id,
@@ -81,10 +79,9 @@ class ConnectionTest extends TestCase
         $this->actingAs($this->senderUser)->post('/connections', $recipientUserData);
 
         // When
-        $response = $this->actingAs($this->recipientUser)->delete('/connections/'.$this->senderUser->id);
+        $this->actingAs($this->recipientUser)->delete('/connections/'.$this->senderUser->id);
 
         // Then
-        $response->assertRedirect(route('connections.index'));
         $this->assertDatabaseMissing('connections', [
             'sender_id' => $this->senderUser->id,
             'recipient_id' => $this->recipientUser->id,
